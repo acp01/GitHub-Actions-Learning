@@ -1,0 +1,38 @@
+name: master
+
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        type: environment
+        required: true
+      function_name:
+        type: choice
+        description: 'Select Code to Run'
+        options:
+        - Hello World
+        - Addition Code
+        required: true
+      date: 
+        description: 'Deploy changes after a commit date in YYYY-MM-DD format (OPTIONAL)'
+        type: string
+        default: '1999-01-01'
+        required: true
+jobs:         
+  trigger_workflows_1:
+    name: Run Hello World
+    uses: ./.github/workflows/run_python_code_hello_world.yml
+    with:
+      environment: ${{inputs.environment}}
+      date: ${{inputs.date}}
+    secrets: inherit
+
+  trigger_workflows_2:
+    name: Run Addition
+    uses: ./.github/workflows/run_python_code_addition.yml
+    with:
+      environment: ${{inputs.environment}}
+      date: ${{inputs.date}}
+    secrets: inherit
+
