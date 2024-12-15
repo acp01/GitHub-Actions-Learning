@@ -7,15 +7,17 @@ on:
         type: choice
         description: 'Select Code to Run'
         options:
-        - Hello World
-        - Addition Code
+          - Hello World
+          - Addition Code
         required: true
+
 jobs:         
-  trigger_workflows_1:
+  trigger_workflows_hello_world:
     name: Run Hello World
     uses: ./.github/workflows/run_python_code_hello_world.yml
+    if: ${{ github.event.inputs.function_name == 'Hello World' }}
 
-  trigger_workflows_2:
+  trigger_workflows_addition:
     name: Run Addition
     uses: ./.github/workflows/run_python_code_addition.yml
-
+    if: ${{ github.event.inputs.function_name == 'Addition Code' }}
